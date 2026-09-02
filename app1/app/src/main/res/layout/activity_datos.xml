@@ -19,14 +19,6 @@
             android:layout_height="57dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DATOS RECOLECTADOS"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="bold|italic" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,4 +53,15 @@
                 android:text="TextView" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DATOS RECOLECTADOS DEL ESTUDIANTE"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="28dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
