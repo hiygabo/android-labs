@@ -39,8 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Nombre" />
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -53,8 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Apellidos" />
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -67,8 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Carnet" />
+                android:inputType="text" />
 
         </LinearLayout>
 
