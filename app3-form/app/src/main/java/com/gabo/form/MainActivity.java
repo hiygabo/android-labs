@@ -52,6 +52,18 @@ public class MainActivity extends AppCompatActivity {
                 String ciudadGuardar= ciudad.getText().toString();
                 String movilGuardar= movil.getText().toString();
 
+                String datosEmpaquetados =
+                        "Nombre: " + nombreGuardar + "\n" +
+                                "Lugar de Nac.: " + lugarNacimientoGuardar + "\n" +
+                                "CI: " + ciGuardar + "\n" +
+                                "Correo: " + correoGuardar + "\n" +
+                                "Dirección: " + direccionGuardar + "\n" +
+                                "Ciudad: " + ciudadGuardar + "\n" +
+                                "Móvil: " + movilGuardar;
+                
+                guardarArchivo(datosEmpaquetados);
+
+
             }
         });
 
