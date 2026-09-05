@@ -1,5 +1,6 @@
 package com.gabo.form;
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +9,11 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText ciudad;
     private EditText movil;
     private TextView resultado;
+    private final String nomArchivo = "DatosForm.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         direccion = findViewById(R.id.etDireccion);
         ciudad = findViewById(R.id.etCiudad);
         movil = findViewById(R.id.etMovil);
+        resultado = findViewById(R.id.resultado);
         Button btnGuardar = findViewById(R.id.btnGuardar);
         Button btnLeer = findViewById(R.id.btnLeer);
 
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                 "Dirección: " + direccionGuardar + "\n" +
                                 "Ciudad: " + ciudadGuardar + "\n" +
                                 "Móvil: " + movilGuardar;
-                
+
                 guardarArchivo(datosEmpaquetados);
 
 
@@ -69,10 +71,42 @@ public class MainActivity extends AppCompatActivity {
 
         btnLeer.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 leerArchivo();
             }
         });
 
+    }
+
+    private void guardarArchivo(String contenido) {
+        try(FileOutputStream guarda = openFileOutput(nomArchivo, Context.MODE_PRIVATE)){
+            guarda.write(contenido.getBytes());
+            nombreCompleto.setText("");
+            lugarNacimiento.setText("");
+            ci.setText("");
+            correo.setText("");
+            direccion.setText("");
+            ciudad.setText("");
+            movil.setText("");
+            Toast.makeText(this, "Guardado en: "+ getFilesDir(), Toast.LENGTH_LONG).show();
+        } catch(IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void leerArchivo(){
+        try(FileInputStream mostrar = openFileInput(nomArchivo);
+            InputStreamReader isr = new InputStreamReader(mostrar);
+            BufferedReader reader = new BufferedReader(isr)) {
+            StringBuilder sb = new StringBuilder();
+            String linea;
+            while((linea=reader.readLine()) != null){
+                sb.append(linea).append("\n");
+            }
+            resultado.setText(sb.toString());
+        }catch(Exception e) {
+            Toast.makeText(this, "El archivo no existe", Toast.LENGTH_LONG).show();
+        }
     }
 }
