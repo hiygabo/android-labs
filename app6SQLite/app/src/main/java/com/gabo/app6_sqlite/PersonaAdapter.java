@@ -1,8 +1,10 @@
 package com.gabo.app6_sqlite;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,38 +12,61 @@ import java.util.List;
 
 public class PersonaAdapter extends RecyclerView.Adapter<PersonaAdapter.PersonaViewHolder> {
 
-    private List<Persona> listaPersonas;
+    private List<Persona> personaList;
+    private OnPersonaClickListener listener;
 
-    public PersonaAdapter(List<Persona> listaPersonas) {
-        this.listaPersonas = listaPersonas;
+    // Interfaz para comunicar clics al MainActivity
+    public interface OnPersonaClickListener {
+        void onPersonaClick(Persona persona);
+        void onDeleteClick(Persona persona);
+    }
+
+    public PersonaAdapter(List<Persona> personaList, OnPersonaClickListener listener) {
+        this.personaList = personaList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public PersonaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_persona, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_persona, parent, false);
         return new PersonaViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PersonaViewHolder holder, int position) {
-        Persona persona = listaPersonas.get(position);
-        holder.tvNombreCompleto.setText(persona.getNombres() + " " + persona.getApellidos());
-        holder.tvCiItem.setText("CI: " + persona.getCi());
+        Persona persona = personaList.get(position);
+        holder.tvNombres.setText(persona.getNombres());
+        holder.tvApellidos.setText(persona.getApellidos());
+        holder.tvCi.setText("CI: " + persona.getCi());
+
+        // Asignamos la acción a los botones para que usen la interfaz
+        holder.btnEdit.setOnClickListener(v -> listener.onPersonaClick(persona));
+        holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(persona));
     }
 
     @Override
     public int getItemCount() {
-        return listaPersonas.size();
+        return personaList.size();
+    }
+
+    public void updateList(List<Persona> newList) {
+        this.personaList = newList;
+        notifyDataSetChanged(); // Avisa al RecyclerView que los datos cambiaron
     }
 
     public static class PersonaViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombreCompleto, tvCiItem;
+        TextView tvNombres, tvApellidos, tvCi;
+        Button btnDelete, btnEdit;
 
         public PersonaViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNombreCompleto = itemView.findViewById(R.id.tvNombreCompleto);
-            tvCiItem = itemView.findViewById(R.id.tvCiItem);
+            tvNombres = itemView.findViewById(R.id.tvNombres);
+            tvApellidos = itemView.findViewById(R.id.tvApellidos);
+            tvCi = itemView.findViewById(R.id.tvCi);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }
 }

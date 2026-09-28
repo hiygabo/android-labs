@@ -1,5 +1,6 @@
 package com.gabo.app6_sqlite;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,26 +54,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    @SuppressLint("Range")
     public List<Persona> getAllPersonas() {
-        List<Persona> personaList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PERSONAS;
+        // Devuelve los resultados más recientes primero (DESC)
+        List<Persona> personas = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PERSONAS
+                + " ORDER BY " + COLUMN_ID + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // Recorremos el cursor agregando cada persona a la lista
         if (cursor.moveToFirst()) {
             do {
                 Persona persona = new Persona(
-                        cursor.getInt(0),    // id
-                        cursor.getString(1), // nombres
-                        cursor.getString(2), // apellidos
-                        cursor.getString(3)  // ci
+                        cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRES)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_APELLIDOS)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_CI))
                 );
-                personaList.add(persona);
+                personas.add(persona);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return personaList;
+        db.close();
+        return personas;
+    }
+
+    // CRUD: Update
+    public int updatePersona(Persona persona) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOMBRES, persona.getNombres());
+        values.put(COLUMN_APELLIDOS, persona.getApellidos());
+        values.put(COLUMN_CI, persona.getCi());
+
+        return db.update(TABLE_PERSONAS, values,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(persona.getId())});
+    }
+
+    // CRUD: Delete
+    public void deletePersona(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PERSONAS,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
     }
 }
