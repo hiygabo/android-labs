@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registro de Alumnos y Notas"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- Registrar Alumno -"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/etNombreAlumno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del alumno" />
+
+        <EditText
+            android:id="@+id/etCarrera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Carrera" />
+
+        <Button
+            android:id="@+id/btnGuardarAlumno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Alumno (ver ID)" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#CCCCCC"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- Registrar Nota -"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/etAlumnoId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID del alumno (ver Toast arriba)"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/etMateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Materia" />
+
+        <EditText
+            android:id="@+id/etNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nota"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/btnGuardarNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Nota" />
+
+        <Button
+            android:id="@+id/btnVolverLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver a la Lista" />
+
+    </LinearLayout>
+</ScrollView>
